@@ -2,7 +2,8 @@
 import { RouterLink } from 'vue-router';
 import useClients from '../composables/useClients';
 
-const {} = useClients();
+const { clients } = useClients();
+
 </script>
 
 <template>
