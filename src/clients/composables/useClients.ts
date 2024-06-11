@@ -3,26 +3,48 @@ import type { Client } from "../interfaces/client";
 import { useQuery } from "@tanstack/vue-query";
 import { useClientsStore } from "@/store/clients";
 import { storeToRefs } from "pinia";
+import type { ClientsResponse } from '../interfaces/clients-response.interface';
+import { computed, watch } from 'vue';
 
-const getClients =async():Promise<Client[]> => {
-    const { data }= await clientApi.get<Client[]>('/clients?_page=1');
-    return data;
+const getClients =async(page: number):Promise<Client[]> => {
+  /* await new Promise(resolve => {
+    setTimeout(() => {
+      resolve(true);
+    }, 1500);
+  }); */
+    const { data }= await clientApi.get<ClientsResponse>(`/clients?_page=${page}`);
+    return data.data;
 }
 
 const useClients =() => {
 
     const store = useClientsStore();
-    const { currentPage, clients, totalPages< } = storeToRefs(store);
+    const { currentPage, clients, totalPages } = storeToRefs(store);
 
    const { isLoading, data } = useQuery({
-        queryKey: ['clients?page=', 1],
-        queryFn: () => getClients()
+        queryKey: ['clients?page=', currentPage],
+        queryFn: () => getClients(currentPage.value)
+    });
+
+    watch(data, (clients) => {
+      if(clients)
+          store.setClients(clients);
     });
 
 
     return {
         isLoading,
-        clients: data,
+        clients,
+        currentPage,
+        totalPages,
+        // Metodos
+        getPage(page: number) {
+          store.setPage(page);
+        },
+        // Getters [1,2,3,4,5]
+       /*  totalPageNumber: computed(
+          () => [...new Array(totalPages.value)].map((v, i) => i + 1 ),
+        ), */
     }
 }
 
