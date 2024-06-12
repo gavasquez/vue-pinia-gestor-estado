@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router';
 import IconPinia from '@/shared/components/icons/IconPinia.vue';
+import { VueQueryDevtools } from '@tanstack/vue-query-devtools';
 
 </script>
 
@@ -12,6 +13,7 @@ import IconPinia from '@/shared/components/icons/IconPinia.vue';
       <h3>Pinia - Ejercicios</h3>
 
       <nav>
+        <VueQueryDevtools />
         <RouterLink to="/">Counter Options</RouterLink>
         <RouterLink to="/counter-2">Counter Setup</RouterLink>
         <RouterLink to="/clients">Cientes</RouterLink>

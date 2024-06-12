@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@tanstack/vue-query": "^5.40.1",
+    "@tanstack/vue-query-devtools": "^5.45.0",
     "axios": "^1.7.2",
     "json-server": "^1.0.0-beta.0",
     "pinia": "^2.0.32",
